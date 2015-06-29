@@ -575,6 +575,7 @@ public class SoftKeyboard extends InputMethodService
         }
     }
 
+
     public void setSuggestions(List<String> suggestions, boolean completions,
                                boolean typedWordValid) {
         if (suggestions != null && suggestions.size() > 0) {
