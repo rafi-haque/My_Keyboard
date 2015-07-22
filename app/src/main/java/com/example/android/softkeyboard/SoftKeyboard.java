@@ -79,6 +79,11 @@ public class SoftKeyboard extends InputMethodService
 
     private String mWordSeparators;
 
+    private RidmikParser toBangla = new RidmikParser();
+    private LatinKeyboard mPhoneticKeyboard;
+    private boolean isInPhoneticMode = true;
+    private int mBanglaWordLength = toBangla.toBangla(mComposing.toString()).length();
+
     /**
      * Main initialization of the input method component.  Be sure to call
      * to super class.
@@ -107,6 +112,7 @@ public class SoftKeyboard extends InputMethodService
         mQwertyKeyboard = new LatinKeyboard(this, R.xml.qwerty);
         mSymbolsKeyboard = new LatinKeyboard(this, R.xml.symbols);
         mSymbolsShiftedKeyboard = new LatinKeyboard(this, R.xml.symbols_shift);
+        mPhoneticKeyboard = new LatinKeyboard(this, R.xml.qwerty);
     }
 
     /**
@@ -453,7 +459,8 @@ public class SoftKeyboard extends InputMethodService
      */
     private void commitTyped(InputConnection inputConnection) {
         if (mComposing.length() > 0) {
-            inputConnection.commitText(mComposing, mComposing.length());
+            //inputConnection.commitText(mComposing, mComposing.length());
+            inputConnection.commitText(toBangla.toBangla(mComposing.toString()), mComposing.length());
             mComposing.setLength(0);
             updateCandidates();
         }
@@ -493,9 +500,12 @@ public class SoftKeyboard extends InputMethodService
     }
 
     /**
-     * Helper to send a character to the editor as raw key events.
+     * Helper to send a character to the editor as raw key events.(Like SpaceKey) Don't Temper!!!
      */
     private void sendKey(int keyCode) {
+        char code =(char) keyCode;
+//        StringBuilder mCode = new StringBuilder(code);
+//        mCode += code;
         switch (keyCode) {
             case '\n':
                 keyDownUp(KeyEvent.KEYCODE_ENTER);
@@ -505,6 +515,7 @@ public class SoftKeyboard extends InputMethodService
                     keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
                 } else {
                     getCurrentInputConnection().commitText(String.valueOf((char) keyCode), 1);
+//                    getCurrentInputConnection().commitText(toBangla.toBangla(mCode.toString()), 1);
                 }
                 break;
         }
@@ -543,17 +554,26 @@ public class SoftKeyboard extends InputMethodService
             }
         } else {
             handleCharacter(primaryCode, keyCodes);
+//            mComposing.append((char) primaryCode);
+//            if (mComposing.length() > 0) {
+//                InputConnection inputConnection = getCurrentInputConnection();
+//                inputConnection.deleteSurroundingText(mBanglaWordLength, 0);
+//                inputConnection.commitText(toBangla.toBangla(mComposing.toString()), mComposing.length());
+//            }
+//            sendKey(primaryCode);
+//            updateShiftKeyState(getCurrentInputEditorInfo());
         }
     }
 
     public void onText(CharSequence text) {
+
         InputConnection ic = getCurrentInputConnection();
         if (ic == null) return;
         ic.beginBatchEdit();
         if (mComposing.length() > 0) {
             commitTyped(ic);
         }
-        ic.commitText(text, 0);
+        ic.commitText(toBangla.toBangla(text.toString()), 0);
         ic.endBatchEdit();
         updateShiftKeyState(getCurrentInputEditorInfo());
     }
@@ -592,7 +612,7 @@ public class SoftKeyboard extends InputMethodService
         final int length = mComposing.length();
         if (length > 1) {
             mComposing.delete(length - 1, length);
-            getCurrentInputConnection().setComposingText(mComposing, 1);
+            getCurrentInputConnection().setComposingText(toBangla.toBangla(mComposing.toString()), 1);
             updateCandidates();
         } else if (length > 0) {
             mComposing.setLength(0);
@@ -633,9 +653,11 @@ public class SoftKeyboard extends InputMethodService
         }
         if (isAlphabet(primaryCode) && mPredictionOn) {
             mComposing.append((char) primaryCode);
-            getCurrentInputConnection().setComposingText(mComposing, 1);
+//            getCurrentInputConnection().setComposingText(mComposing., 1);
+            getCurrentInputConnection().setComposingText(toBangla.toBangla(mComposing.toString()), 1);
             updateShiftKeyState(getCurrentInputEditorInfo());
             updateCandidates();
+
         } else {
             getCurrentInputConnection().commitText(
                     String.valueOf((char) primaryCode), 1);
@@ -718,8 +740,7 @@ public class SoftKeyboard extends InputMethodService
         handleClose();
     }
 
-    public void swipeUp() {
-    }
+    public void swipeUp() {}
 
     public void onPress(int primaryCode) {
     }

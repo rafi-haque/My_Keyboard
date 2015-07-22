@@ -22,15 +22,18 @@ public final class R {
         public static final int key_height=0x7f050000;
     }
     public static final class drawable {
-        public static final int icon_en_gb=0x7f020000;
-        public static final int icon_en_us=0x7f020001;
-        public static final int sym_keyboard_delete=0x7f020002;
-        public static final int sym_keyboard_done=0x7f020003;
-        public static final int sym_keyboard_language_switch=0x7f020004;
-        public static final int sym_keyboard_return=0x7f020005;
-        public static final int sym_keyboard_search=0x7f020006;
-        public static final int sym_keyboard_shift=0x7f020007;
-        public static final int sym_keyboard_space=0x7f020008;
+        public static final int black_color=0x7f020000;
+        public static final int gray_color=0x7f020001;
+        public static final int icon_en_gb=0x7f020002;
+        public static final int icon_en_us=0x7f020003;
+        public static final int sym_keyboard_delete=0x7f020004;
+        public static final int sym_keyboard_done=0x7f020005;
+        public static final int sym_keyboard_language_switch=0x7f020006;
+        public static final int sym_keyboard_return=0x7f020007;
+        public static final int sym_keyboard_search=0x7f020008;
+        public static final int sym_keyboard_shift=0x7f020009;
+        public static final int sym_keyboard_space=0x7f02000a;
+        public static final int white_color=0x7f02000b;
     }
     public static final class id {
         public static final int keyboard=0x7f080000;

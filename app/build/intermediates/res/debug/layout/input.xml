@@ -23,5 +23,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
+    android:keyBackground="@drawable/black_color"
     tools:context=".ImePreferences" />
 <!-- From: file:/C:/Users/Rafi/git/development-master-samples-SoftKeyboard/app/src/main/res/layout/input.xml -->
